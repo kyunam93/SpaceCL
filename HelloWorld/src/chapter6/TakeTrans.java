@@ -42,21 +42,21 @@ public class TakeTrans {
 		Subway subway9 = new Subway("9", 1500);  // 1500원 차감 
 
 		//Stduent James
-		stu1.takeBus(bus970); //버스 타고 
+		stu1.takeBus(bus970); //버스 타고 100
 		stu1.takeBusOff(bus970); //버스에서 내린다.
-		stu1.takeSubway(subway3); //지하철 타고 --> 
+		stu1.takeSubway(subway3); //지하철 타고 --> 500 
 		//문제: 지하철이나 버스를 먼저 탔던 다음 대중교통 이용시 50% 할인 
 		stu1.takeSubwayOff(subway3); //지하철에서 내린다.
-		stu1.showInfo(); //현재 남은돈 출력
+		stu1.showInfo(); //현재 남은돈 출력 4400
 		
 		//Stduent Tomas
-		stu2.takeSubway(subway9); //지하철 타고
+		stu2.takeSubway(subway9); //지하철 타고 1500
 		stu2.takeSubwayOff(subway9);
 		
 		stu2.takeSubway(subway3); //지하철 타고 --> 지하철 끼리는 공짜
 		stu2.takeSubwayOff(subway3);
 		
-		stu2.takeBus(bus970); //버스 타고 --> 버스값 50% 할인 
+		stu2.takeBus(bus970); //버스 타고 --> 버스값 50% 할인  50 
 		stu1.takeBusOff(bus970); //버스에서 내린다.
 		
 		stu2.showInfo(); //현재 남은돈 출력

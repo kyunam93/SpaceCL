@@ -16,8 +16,8 @@ public class Subway {
 	 * @param money
 	 */
 	public void take(Student student) {
-		student.money -= COAST;
-		money += COAST; // 수입액 증가
+		student.money -= student.isBusTransfar ? (COAST/2) : student.isSubwayTransfar ? 0 : COAST;
+		money += student.isBusTransfar ? (COAST/2) : student.isSubwayTransfar ? 0 : COAST;
 		passengerCount++; // 승객 수 증가
 	}// end method take
 
@@ -31,4 +31,5 @@ public class Subway {
 	public void showInfo() {
 		System.out.println(lineNumber + "의 승객은 " + passengerCount + "명이고, 수입은 " + money + "입니다.");
 	}// end method showInfo
+	
 }

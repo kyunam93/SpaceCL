@@ -1,7 +1,6 @@
 package chapter6;
 
 public class Bus {
-
 	private int busNumber;
 	private int passengerCount;
 	private int money;
@@ -17,8 +16,9 @@ public class Bus {
 	 * @param money
 	 */
 	public void take(Student student) {
-		student.money -= COAST;
-		money += COAST;
+		
+		student.money -= student.isSubwayTransfar ? (COAST/2) : student.isBusTransfar ? 0 : COAST;
+		money += student.isSubwayTransfar ? (COAST/2) : student.isBusTransfar ? 0 : COAST;
 		passengerCount++;
 		
 	} // end method take
@@ -28,11 +28,8 @@ public class Bus {
 	 * @param passengerCount
 	 */
 	public void takeOff() {
-		// TODO 여러분들이 짜보세요
-		
-		if(passengerCount > 0) { 
+		if(passengerCount > 0)  
 			passengerCount--;
-		}
 	}
 
 	public void showInfo() {

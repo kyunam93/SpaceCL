@@ -4,7 +4,9 @@ public class Student {
 	public String studentName; // 학생이름
 	public int garde; // 학년
 	public int money; // 학생이 지닌 돈
-
+	public boolean isBusTransfar = false;
+	public boolean isSubwayTransfar = false;	
+	
 	// 생성자 생성 및 멤버변수(학생이름, 돈) 초기화
 	public Student(String studentName, int money) {
 		this.studentName = studentName;
@@ -25,10 +27,12 @@ public class Student {
 
 	public void takeBusOff(Bus bus) {
 		bus.takeOff();
+		isBusTransfar = true;
 	}
 	
 	public void takeSubwayOff(Subway subway) {
 		subway.takeOff();
+		isSubwayTransfar = true;
 	}
 	
 	public void showInfo() {
