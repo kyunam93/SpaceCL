@@ -16,8 +16,26 @@ public class Subway {
 	 * @param money
 	 */
 	public void take(Student student) {
-		student.money -= student.isBusTransfar ? (COAST/2) : student.isSubwayTransfar ? 0 : COAST;
-		money += student.isBusTransfar ? (COAST/2) : student.isSubwayTransfar ? 0 : COAST;
+		// 가독성을 위해 삼항연산자는 한번만 수행한다.
+		// 아래와 같이 코드를 작성하려면 if문을 써서 가독성을 높힌다.
+//		student.money -= student.isBusTransfar ? (COAST/2) : student.isSubwayTransfar ? 0 : COAST;
+//		money += student.isBusTransfar ? (COAST/2) : student.isSubwayTransfar ? 0 : COAST;
+		
+		if(student.isBusTransfar) {
+			System.out.println("50% 환승");
+			student.money -= COAST/2;
+			money += COAST/2;
+		} 
+		else {
+			if(student.isSubwayTransfar) {
+				System.out.println("무료 환승");
+			}
+			else {
+				student.money -= COAST;
+				money += COAST;
+			}
+		}
+
 		passengerCount++; // 승객 수 증가
 	}// end method take
 
