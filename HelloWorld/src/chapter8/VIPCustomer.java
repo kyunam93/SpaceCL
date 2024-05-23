@@ -16,9 +16,9 @@ public class VIPCustomer extends Customer {
 		saleRatio = 0.1;
 	}// end VIPCustomer
 	
-	public VIPCustomer(int i) {
-		
-	}
+	public VIPCustomer(int agentID) {
+		this.agentID = agentID;
+	}// end VipCustomer
 
 	
 	// VIP 고객에게만 필요한 메서드
@@ -34,12 +34,12 @@ public class VIPCustomer extends Customer {
 	public int calcPrice(int price) {	
 
 		return 0;
-	}
+	}// end calcPrice
 	
 	// 부모 클래스 Object
 	@Override
 	public String toString() {
 		return "I am VIPCustomer Class";
-	}
+	}// end toString
 	
 }// end class
