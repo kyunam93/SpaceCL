@@ -44,6 +44,8 @@ public class chapter11 {
 		System.out.println(copyCircle);
 		System.out.println(System.identityHashCode(circle));
 		System.out.println(System.identityHashCode(copyCircle));
+		
+		
 
 	}
 
