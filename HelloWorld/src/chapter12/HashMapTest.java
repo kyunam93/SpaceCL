@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class MemberHashMapTest {
+public class HashMapTest {
 
 	public static void main(String[] args) {
 
@@ -27,7 +27,7 @@ public class MemberHashMapTest {
 			System.out.println("Key: " + key + "\tValue: " + value);
 			
 		}// end while
-
+ 
 	}// end main
 
 }// end class
