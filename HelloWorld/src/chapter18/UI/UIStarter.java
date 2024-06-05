@@ -1,6 +1,6 @@
-package chapter17;
+package chapter18.UI;
 
-public class LoginTest {
+public class UIStarter {
 
 	public static void main(String[] args) {
 
