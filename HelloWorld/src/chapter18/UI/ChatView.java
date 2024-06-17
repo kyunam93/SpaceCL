@@ -8,9 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.nio.channels.ClosedByInterruptException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -19,7 +21,7 @@ public class ChatView extends JFrame {
 	// member variable init
 	String ip;
 	String nickname;
-	JTextArea area;
+	public JTextArea area;
 	private MultiChatClient client;
 	
 	// constructor init
@@ -50,10 +52,17 @@ public class ChatView extends JFrame {
 		area = new JTextArea();
 		area.setEditable(false);
 
+		// 스크롤 뷰에 텍스트 에리아 추가
+		JScrollPane scroll = new JScrollPane(area);
+		scroll.scrollRectToVisible(area.getBounds());
+		
+		// container setting
 		con.setLayout(new BorderLayout(20, 10));
-		con.add(area, BorderLayout.CENTER);
+		con.add(scroll, BorderLayout.CENTER);
 		con.add(panel, BorderLayout.SOUTH);
 
+
+		// send button event 
 		entBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -65,6 +74,7 @@ public class ChatView extends JFrame {
 
 		});
 
+		// text field key event
 		txt.addKeyListener(new KeyListener() {
 
 			@Override
@@ -85,10 +95,18 @@ public class ChatView extends JFrame {
 
 		});
 
-//		client = new MultiChatClient(this);
+		client = new MultiChatClient(this, this.nickname);
+		client.start();
 		
 	}// end constructor
 
+	/**
+	 * Area 화면에 출력
+	 * @param msg : 채팅 메세지
+	 */
+	public void addViewMsg(String msg) {
+		area.append(msg + "\n");
+	}
 	
 	/**
 	 * 입력한 메세지를 Area 화면에 메세지를 띄운다
@@ -99,12 +117,15 @@ public class ChatView extends JFrame {
 	 */
 	public void sendText(JTextArea area, JTextField txt) {
 
-		// TextArea로 메세지 적용
-		area.append(txt.getText() + "\n");
-		txt.setText("");
-
 		// 서버로 메세지 전송
 //		client.sendMessage(nickname + " ==> " + txt.getText());
+		client.sendMsg(txt.getText());
+		
+		// TextArea로 메세지 적용\
+//		area.setText(area.getText() + txt.getText() + "\n");
+		area.append(txt.getText() + "\n");
+		txt.setText("");
+		txt.requestFocus();
 
 	}// end method
 

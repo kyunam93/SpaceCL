@@ -1,4 +1,4 @@
-package chapter18.UI;
+package chapter18;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
@@ -7,14 +7,16 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class MultiChatClient123123 {
+import chapter18.UI.ChatView;
+
+public class MultiChatClientCopy {
 
 	// member variable init
 	private ChatView chat;
 	private Socket socket;
 
 	// constructor init
-	public MultiChatClient123123(ChatView chat) {
+	public MultiChatClientCopy(ChatView chat) {
 
 		this.chat = chat;
 

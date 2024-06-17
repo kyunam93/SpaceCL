@@ -33,9 +33,10 @@ import javax.swing.JTextArea;
 public class LoginView extends JFrame {
 
 	// member variable init
-	private String mIP;
-	private String mNickName;
-	private JTextArea area;
+//	private String mIP;
+//	private String mNickName;
+//	private JTextArea area;
+	private ChatView chat;
 
 	public LoginView() {
 
@@ -155,10 +156,10 @@ public class LoginView extends JFrame {
 		}
 
 		// create 'chat view' instance
-		ChatView chat = new ChatView(ipTxt.getText(), nickTxt.getText());
-
-		setVisible(false); // hide login view
+		chat = new ChatView(ipTxt.getText(), nickTxt.getText());
 		chat.setVisible(true); // show chat view
+		
+		this.setVisible(false); // hide login view
 
 		JOptionPane.showMessageDialog(null, "Login Success");
 

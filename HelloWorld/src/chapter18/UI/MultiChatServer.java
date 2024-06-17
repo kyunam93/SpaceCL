@@ -24,12 +24,11 @@ public class MultiChatServer {
 
 	} // end constructor
 
-	// method init
-
 	/**
-	 * 서버를 실행하기 위한 메소
+	 * 서버를 실행하기 위한 메소드
 	 */
-	public void run() {
+	public void start() {
+		
 		try {
 
 			// 서버 소켓 생성
@@ -39,6 +38,7 @@ public class MultiChatServer {
 			// 무한루프로 클라이언트와 연결되면 스레드를 생성하여 소켓을 초기화 한다.
 			while (true) {
 
+				// 클라이언트의 정보를 지님
 				Socket socket = server.accept();
 
 				// 쓰레드 시작
@@ -57,24 +57,25 @@ public class MultiChatServer {
 
 	public static void main(String[] args) {
 
-		new MultiChatServer().run();// 서버 실행
+		new MultiChatServer().start();// 서버 실행
 	}// end main
-
+	
 	class ServerReceiver extends Thread {
 
 		// member variable init
 		Socket socket;
-		DataInputStream inStream;
-		DataOutputStream outStream;
+		DataInputStream input;
+		DataOutputStream output;
 
 		// constructor init
 		public ServerReceiver(Socket socket) {
+			
 			this.socket = socket;
 
 			try {
 
-				inStream = new DataInputStream(socket.getInputStream());
-				outStream = new DataOutputStream(socket.getOutputStream());
+				input = new DataInputStream(socket.getInputStream());
+				output = new DataOutputStream(socket.getOutputStream());
 
 			} // end try
 
@@ -91,10 +92,10 @@ public class MultiChatServer {
 
 			try {
 
-				name = inStream.readUTF();
+				name = input.readUTF();
 				
 				// 접속하는 클라이언트를 Map에 넣는다.
-				clients.put(name, outStream);
+				clients.put(name, output);
 				
 				String msg = name + " 님이 접속 하셨습니다.";
 				sendToAll(msg);
@@ -103,8 +104,8 @@ public class MultiChatServer {
 				System.out.println("현재 "  + clients.size() + " 명이 대화방에 접속 중입니다.");
 				
 				// 메세지 전송
-				while(inStream != null) {
-					sendToAll(inStream.readUTF());
+				while(input != null) {
+					sendToAll(input.readUTF());
 				}// end while
 				
 			} // end try
@@ -136,8 +137,8 @@ public class MultiChatServer {
 
 				try {
 
-					DataOutputStream outStream = clients.get(it.next());
-					outStream.writeUTF(msg);
+					DataOutputStream dos = clients.get(it.next());
+					dos.writeUTF(msg);
 
 				} // end try
 
