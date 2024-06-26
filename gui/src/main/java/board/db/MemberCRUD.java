@@ -107,16 +107,18 @@ public class MemberCRUD extends CommonCRUD {
 				while (rs.next()) {
 
 					mBean.setMemberNo(rs.getString("member_no"));
-					mBean.setId("id");
-					mBean.setPw("pw");
-					mBean.setName("name");
-					mBean.setEmail("email");
-					mBean.setAddr("addr");
-					mBean.setBirthdate("birthdate");
-					mBean.setHp("hp");
-					mBean.setRegDt("reg_dt");
-					mBean.setLastLoginDt("last_login_dt");
-
+					mBean.setId(rs.getString("id"));
+					mBean.setPw(rs.getString("pw"));
+					mBean.setName(rs.getString("name"));
+					mBean.setEmail(rs.getString("email"));
+					mBean.setAddr(rs.getString("addr"));
+					mBean.setBirthdate(rs.getString("birthdate"));
+					mBean.setHp(rs.getString("hp"));
+					mBean.setRegDt(rs.getString("reg_dt"));
+					mBean.setLastLoginDt(rs.getString("last_login_dt"));
+					
+					
+					System.out.println(mBean);
 				} // while
 
 				System.out.println("성공");

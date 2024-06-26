@@ -26,9 +26,9 @@ public class BoardWriteModal extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtTitle;
 	private JTextArea txtContent;
-	private MemberBean mBean;
 	BoardCRUD bCRUD = new BoardCRUD();
 	MainBoard mainBoard;
+	MemberBean mBean;
 
 	/**
 	 * Create the dialog.

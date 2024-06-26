@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.table.DefaultTableModel;
 
 public class BoardCRUD extends CommonCRUD {
 
@@ -59,12 +58,14 @@ public class BoardCRUD extends CommonCRUD {
 	public List<BoardBean> getBoardList(int pageNo, String searchWord) {
 
 		List<BoardBean> list = new ArrayList<BoardBean>();
+		int startOffset = ((pageNo - 1) * 10); // 공식
 
-		String sql = "SELECT board_no, title, contents, count, secret_yn, member_no, ";
-		sql += "(SELECT name FROM member WHERE member_no = b.member_no) memberName, reg_dt ";
-		sql += "FROM board b ";
-		sql += "WHERE title LIKE '%" + searchWord + "%' OR contents LIKE '%" + searchWord + "%' ";
-		sql += "ORDER BY board_no DESC LIMIT 10";/* + "OFFSET " + pageNo; */
+		String sql = "SELECT board_no, title, contents, count, secret_yn, member_no, "
+				+ "(SELECT name FROM member WHERE member_no = b.member_no) memberName, reg_dt " + "FROM board b "
+				+ "WHERE title LIKE '%" + searchWord + "%' "
+				+ "OR contents LIKE '%" + searchWord + "%' "
+				+ "ORDER BY board_no DESC " 
+				+ "LIMIT " + startOffset + ", 10";
 
 		System.out.println(sql);
 
@@ -97,35 +98,62 @@ public class BoardCRUD extends CommonCRUD {
 		return list;
 
 	}// method getBoardList
-	
-	
+
 	/**
 	 * 총 글 개수 확인
+	 * 
 	 * @return
 	 */
-	public int getTotalListCnt() {
+	public int getTotalListCnt(String searchWord) {
 		int cnt = 0;
-		String sql = "SELECT count(*) FROM board";
-		
+		String sql = "SELECT count(*) FROM board " + "WHERE title LIKE '%" + searchWord + "%' " + "OR contents LIKE '%"
+				+ searchWord + "%'";
+
 		try {
-			
-			
+
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				cnt = rs.getInt(1);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return cnt;
 	}// method
 
-	
-	public static void main(String[] args) {
-		System.out.println(new BoardCRUD().getTotalListCnt());
+	public BoardBean getBoard(String boardNo) {
+
+		BoardBean bean = new BoardBean();
+
+		String sql = "SELECT board_no, title, contents, count, secret_yn, member_no, "
+				+ "(SELECT name FROM member WHERE member_no = b.member_no) memberName, reg_dt " + "FROM board b "
+				+ "WHERE board_no = " + boardNo;			
+
+		try {
+
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+
+				bean.setBoardNo(rs.getString("board_no"));
+				bean.setTitle(rs.getString("title"));
+				bean.setContents(rs.getString("contents"));
+				bean.setCount(rs.getString("count"));
+				bean.setSecretYn(rs.getString("secret_yn"));
+				bean.setMemberNo(rs.getString("member_no"));
+				bean.setMemberName(rs.getString("memberName"));
+				bean.setRegDt(rs.getString("reg_dt"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bean;
 	}
+
 }// class
