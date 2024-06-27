@@ -193,6 +193,8 @@ public class MainBoard extends JFrame {
 
 					if (e.getSource() instanceof SpaceCLButton) {
 
+						System.out.println(e.getSource());
+						
 						SpaceCLButton btn = (SpaceCLButton) e.getSource();
 						String title = btn.getLabel();
 						System.out.println("클릭한 페이지 번호: " + title);
@@ -257,6 +259,10 @@ public class MainBoard extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				
+				System.out.println("테이블 로우 클릭 이벤트");
+				System.out.println(e.getSource());
+				System.out.println(e.getPoint());
+				
 				JTable table = (JTable) e.getSource();
 				Point point = e.getPoint();
 				int row = table.rowAtPoint(point);
@@ -268,8 +274,12 @@ public class MainBoard extends JFrame {
 					String boardNo = (String) table.getValueAt(row, 0);
 
 					System.out.println("클릭한 테이블 고유번호: " + boardNo);
-
 					System.out.println("클릭한 테이블에 담긴 정보: \n" + bCRUD.getBoard(boardNo));
+					
+					BoardBean bBean = bCRUD.getBoard(boardNo);
+					
+					BoardDetail bDtail = new BoardDetail(mBean, bBean, MainBoard.this);
+					bDtail.setVisible(true);
 
 				}// if
 				
