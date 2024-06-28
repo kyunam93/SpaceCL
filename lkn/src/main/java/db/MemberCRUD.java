@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import com.mysql.cj.util.StringUtils;
+
 public class MemberCRUD extends CommonCRUD {
 
 	// init member variable
@@ -37,12 +39,6 @@ public class MemberCRUD extends CommonCRUD {
 				mBean.setId(rs.getString(2));
 				mBean.setName(rs.getString(3));
 			}
-
-			System.out.println("[DATA] MemberBean : " + mBean);
-			
-			if (mBean != null) {
-				System.out.println("[SUCCESS] 회원 조회 성공!");
-			} 
 
 		} catch (Exception e) {
 			e.printStackTrace();

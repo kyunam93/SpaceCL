@@ -33,8 +33,8 @@ public class BoardWriteModal extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public BoardWriteModal(JPanel pnlBoard, JPanel pnlPaging, MemberBean mBean, BoardMain main) {
-
+	public BoardWriteModal(JPanel pnlBoard, JPanel pnlPaging, MemberBean mBean, BoardMain main, int curPage) {
+		
 		System.out.println("[CALL] BoardWriteModal 생성자");
 
 		setBounds(100, 100, 600, 650);
@@ -118,7 +118,7 @@ public class BoardWriteModal extends JDialog {
 
 					JOptionPane.showMessageDialog(null, "게시글이 작성 되었습니다.");
 					BoardWriteModal.this.dispose();
-					main.showTable(pnlBoard, pnlPaging, null);
+					main.showTable(pnlBoard, pnlPaging, null, curPage);
 
 				} else {
 					JOptionPane.showMessageDialog(null, "게시글이 작성 실패되었습니다.");

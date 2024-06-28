@@ -2,13 +2,11 @@ package swingui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -104,7 +102,7 @@ public class Login extends JFrame {
 			MemberBean mBean = new MemberBean();
 			mBean = mCRUD.getMember(id, pw);
 			
-			if(mBean != null) {
+			if(id.equals(mBean.getId())) {
 				
 				JOptionPane.showMessageDialog(null, id + "님 환영합니다.");
 				Login.this.dispose();
@@ -113,7 +111,7 @@ public class Login extends JFrame {
 				
 			} else {
 				JOptionPane.showMessageDialog(null, "아이디 혹은 비밀번호 입력이 틀렸습니다.");
-			}// if~ else
+			}// if~ else 
 			
 		} else {
 			JOptionPane.showMessageDialog(null, "아이디 혹은 비밀번호 입력을 확인해주세요");

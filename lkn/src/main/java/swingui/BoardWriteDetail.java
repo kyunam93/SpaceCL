@@ -17,19 +17,32 @@ import javax.swing.border.EmptyBorder;
 
 import db.BoardBean;
 import db.BoardCRUD;
+import db.MemberBean;
 
 public class BoardWriteDetail extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private final JPanel buttonPane;
 	private JTextField txtTitle;
+	private JTextArea txtContent;
 
 	private BoardCRUD bCRUD = new BoardCRUD();
+	private BoardMain main;
+	private JPanel pnlBoard;
+	private JPanel pnlPaging;
+	private int curPage;
 
 	/**
 	 * Create the dialog.
 	 */
-	public BoardWriteDetail(BoardBean bean, BoardMain main, JPanel pnlBoard, JPanel pnlPaging) {
+	public BoardWriteDetail(BoardBean bBean, MemberBean mBean, BoardMain main, JPanel pnlBoard, JPanel pnlPaging,
+			int curPage) {
+
+		this.main = main;
+		this.pnlBoard = pnlBoard;
+		this.pnlPaging = pnlPaging;
+		this.curPage = curPage;
 
 		System.out.println("[CALL] BoardWriteDetail 생성자");
 
@@ -61,84 +74,99 @@ public class BoardWriteDetail extends JDialog {
 		lblContent.setHorizontalAlignment(JLabel.CENTER);
 		pnlCenter.add(lblContent, BorderLayout.WEST);
 
-		JTextArea txtContent = new JTextArea();
+		txtContent = new JTextArea();
 		txtContent.setTabSize(0);
 		pnlCenter.add(txtContent, BorderLayout.CENTER);
 
-		JPanel buttonPane = new JPanel();
+		buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-		JButton btnUpdate = new JButton("수정");
-		btnUpdate.setActionCommand("OK");
-		buttonPane.add(btnUpdate);
-		getRootPane().setDefaultButton(btnUpdate);
+		checkWriter(bBean, mBean);
+		
+	}// constructor
 
-		JButton btnDelete = new JButton("삭제");
-		btnDelete.setActionCommand("OK");
-		buttonPane.add(btnDelete);
-		getRootPane().setDefaultButton(btnDelete);
+	public void checkWriter(BoardBean bBean, MemberBean mBean) {
 
+		String loginMember = mBean.getMember_no();
+		String boardWriter = bBean.getMember_no();
+
+		if (loginMember.equals(boardWriter)) {
+
+			JButton btnUpdate = new JButton("수정");
+			btnUpdate.setActionCommand("OK");
+			buttonPane.add(btnUpdate);
+			getRootPane().setDefaultButton(btnUpdate);
+
+			JButton btnDelete = new JButton("삭제");
+			btnDelete.setActionCommand("OK");
+			buttonPane.add(btnDelete);
+			getRootPane().setDefaultButton(btnDelete);
+
+			txtTitle.setText(bBean.getTitle());
+			txtContent.setText(bBean.getContents());
+
+			// 수정 버튼
+			btnUpdate.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int confirm = JOptionPane.showConfirmDialog(null, "수정하시겠습니까?", "수정 확인 알림",
+							JOptionPane.YES_NO_OPTION);
+
+					if (confirm == JOptionPane.YES_OPTION) {
+
+						bBean.setTitle(txtTitle.getText());
+						bBean.setContents(txtContent.getText());
+						int result = bCRUD.updateBoard(bBean);
+
+						if (result > 0) {
+							JOptionPane.showMessageDialog(null, "수정되었습니다!");
+							main.showTable(pnlBoard, pnlPaging, null, curPage);
+							BoardWriteDetail.this.dispose();
+
+						} else {
+							JOptionPane.showMessageDialog(null, "수정이 실패되었습니다!");
+							BoardWriteDetail.this.dispose();
+						} // if ~ else
+
+					} else {
+						return;
+					} // if ~ else
+				}
+			});
+
+			// 삭제 버튼
+			btnDelete.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int confirm = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인 알림",
+							JOptionPane.YES_NO_OPTION);
+
+					if (confirm == JOptionPane.YES_OPTION) {
+						int result = bCRUD.deleteBoard(bBean.getBoard_no());
+
+						if (result > 0) {
+							JOptionPane.showMessageDialog(null, "삭제되었습니다!");
+							main.showTable(pnlBoard, pnlPaging, null, curPage);
+							BoardWriteDetail.this.dispose();
+						} else {
+							JOptionPane.showMessageDialog(null, "삭제가 실패되었습니다!");
+							BoardWriteDetail.this.dispose();
+						} // if ~ else
+
+					} else {
+						return;
+					} // if ~ else
+				}
+			});
+
+		}
+		
 		JButton btnCancel = new JButton("취소");
 		btnCancel.setActionCommand("Cancel");
 		buttonPane.add(btnCancel);
-
-		txtTitle.setText(bean.getTitle());
-		txtContent.setText(bean.getContents());
-
-		// 수정 버튼
-		btnUpdate.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int confirm = JOptionPane.showConfirmDialog(null, "수정하시겠습니까?", "수정 확인 알림", JOptionPane.YES_NO_OPTION);
-
-				if (confirm == JOptionPane.YES_OPTION) {
-					
-					bean.setTitle(txtTitle.getText());
-					bean.setContents(txtContent.getText());
-					int result = bCRUD.updateBoard(bean);
-
-					if (result > 0) {
-						JOptionPane.showMessageDialog(null, "수정되었습니다!");
-						main.showTable(pnlBoard, pnlPaging, null);
-						BoardWriteDetail.this.dispose();
-						
-					} else {
-						JOptionPane.showMessageDialog(null, "수정이 실패되었습니다!");
-						BoardWriteDetail.this.dispose();
-					}
-
-				} else {
-					return;
-				}
-			}
-		});
-
-		// 삭제 버튼
-		btnDelete.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int confirm = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인 알림", JOptionPane.YES_NO_OPTION);
-
-				if (confirm == JOptionPane.YES_OPTION) {
-					int result = bCRUD.deleteBoard(bean.getBoard_no());
-
-					if (result > 0) {
-						JOptionPane.showMessageDialog(null, "삭제되었습니다!");
-						main.showTable(pnlBoard, pnlPaging, null);
-						BoardWriteDetail.this.dispose();
-					} else {
-						JOptionPane.showMessageDialog(null, "삭제가 실패되었습니다!");
-						BoardWriteDetail.this.dispose();
-					}
-
-				} else {
-					return;
-				}
-			}
-		});
 
 		// 취소 버튼
 		btnCancel.addActionListener(new ActionListener() {
@@ -148,7 +176,6 @@ public class BoardWriteDetail extends JDialog {
 				BoardWriteDetail.this.dispose();
 			}
 		});
-
 	}
 
-}
+}// class

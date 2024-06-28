@@ -128,18 +128,20 @@ public class BoardCRUD extends CommonCRUD {
 		return bean;
 	}
 
-	public List<BoardBean> getBoardList(String searchWord) {
+	public List<BoardBean> getBoardList(String searchWord, int curPage, int pageSize) {
 		System.out.println("[Call] Method - selectBoardList()!");
 		System.out.println("[DATA] searchWord : " + searchWord);
+		
+		int offset = (curPage - 1) * pageSize;
 
 		List<BoardBean> bList = new ArrayList<BoardBean>();
 
 		String sql = "SELECT board_no, member_no, title, contents, "
-				+ "(SELECT name FROM member where member_no = b.member_no) writer, "
+				+ "(SELECT id FROM member where member_no = b.member_no) writer, "
 				+ "count, secret_yn, date_format(reg_dt, '%Y-%m-%d') reg_dt " + "FROM board b ";
 		if (!StringUtils.isNullOrEmpty(searchWord))
 			sql += "WHERE title LIKE '%" + searchWord + "%' OR contents LIKE '%" + searchWord + "%' ";
-		sql += "ORDER BY board_no DESC";
+		sql += "ORDER BY board_no DESC LIMIT " + offset + ", " + pageSize;
 
 		System.out.println("[SQL] : " + sql);
 
