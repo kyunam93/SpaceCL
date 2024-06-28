@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import com.mysql.cj.util.StringUtils;
-
 public class MemberCRUD extends CommonCRUD {
 
 	// init member variable

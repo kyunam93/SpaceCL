@@ -26,7 +26,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.text.TableView.TableRow;
 
 import com.mysql.cj.util.StringUtils;
 
