@@ -11,40 +11,46 @@ public class MemberCRUD extends CommonCRUD {
 
 	// init constructor
 	public MemberCRUD() {
-		conn = getConnection();
+		System.out.println("[CALL] MemberCRUD 생성자");
+
+		if(conn == null) {
+			conn = getConnection();	
+		}
 	}// constructor
 
 	// init method
-	public int getMember(String id, String pw) {
-		System.out.println("Call Method getMember()!");
-		
-		int cnt = 0;
+	public MemberBean getMember(String id, String pw) {
+		System.out.println("[Call] Method getMember()!");
 
-		String sql = "SELECT count(*) FROM member WHERE id = '" + id + "' AND pw = '" + pw + "'";
+		MemberBean mBean = new MemberBean();
+		String sql = "SELECT member_no, id, name "
+				+ "FROM member "
+				+ "WHERE id = '" + id + "' AND pw = '" + pw + "'";
 
 		try {
-			
+
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			
-			if(rs.next()) {
-				cnt = rs.getInt(1);
-				System.out.println("cnt : " + cnt);
+
+			if (rs.next()) {
+				mBean.setMember_no(rs.getString(1));
+				mBean.setId(rs.getString(2));
+				mBean.setName(rs.getString(3));
 			}
+
+			System.out.println("[DATA] MemberBean : " + mBean);
 			
-			if(cnt > 0){
-				System.out.println("회원 조회 성공!");
-			}else {
-				System.out.println("회원 조회 실패!");
-			}
+			if (mBean != null) {
+				System.out.println("[SUCCESS] 회원 조회 성공!");
+			} 
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("회원 조회 실패!");
+			System.out.println("[ERROR] 회원 조회 실패!");
 		}
 
-		return cnt;
-		
+		return mBean;
+
 	}// method
 
 }// class

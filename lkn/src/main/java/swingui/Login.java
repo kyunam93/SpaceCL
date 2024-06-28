@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -20,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.lang3.StringUtils;
 
+import db.MemberBean;
 import db.MemberCRUD;
 
 public class Login extends JFrame {
@@ -30,25 +32,11 @@ public class Login extends JFrame {
 	private JPasswordField txtPw;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public Login() {
+		System.out.println("[CALL] Login 생성자");
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 200, 150);
 		setLocationRelativeTo(null);
@@ -81,19 +69,7 @@ public class Login extends JFrame {
 		btnLogin.setSize(new Dimension(contentPane.getWidth(), 50));
 		contentPane.add(btnLogin, BorderLayout.SOUTH);
 		
-		txtPw.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+		txtPw.addKeyListener(new KeyAdapter() {
 			
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -109,6 +85,7 @@ public class Login extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("[CLICKED] 로그인 버튼");
 				checkLogin();				
 			}// method
 		});
@@ -117,18 +94,23 @@ public class Login extends JFrame {
 	
 	public void checkLogin() {
 		
+		MemberCRUD mCRUD = new MemberCRUD();
+		
 		String id = txtId.getText();
 		String pw = new String(txtPw.getPassword());
 		
 		if(StringUtils.isNotEmpty(id) && StringUtils.isNotEmpty(pw)) {
-			MemberCRUD mCRUD = new MemberCRUD();
 			
-			int loginResult = mCRUD.getMember(id, pw);
+			MemberBean mBean = new MemberBean();
+			mBean = mCRUD.getMember(id, pw);
 			
-			if(loginResult > 0) {
+			if(mBean != null) {
+				
 				JOptionPane.showMessageDialog(null, id + "님 환영합니다.");
 				Login.this.dispose();
-				new MainBoard().setVisible(true);
+				
+				new BoardMain(mBean).setVisible(true);
+				
 			} else {
 				JOptionPane.showMessageDialog(null, "아이디 혹은 비밀번호 입력이 틀렸습니다.");
 			}// if~ else
