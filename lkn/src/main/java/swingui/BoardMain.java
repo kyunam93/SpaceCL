@@ -40,6 +40,7 @@ public class BoardMain extends JFrame {
 	private JPanel pnlPaging;
 	private JPanel pnlBoard;
 	private JTextField txtSearch;
+	private JButton btnChatting;
 
 	private MemberBean mBean;
 	private BoardCRUD bCRUD = new BoardCRUD();
@@ -57,6 +58,7 @@ public class BoardMain extends JFrame {
 
 	/** 총 페이지 수 **/
 	private int pageCnt;
+	private JPanel pnlSearch;
 
 	/**
 	 * Create the frame.
@@ -84,7 +86,7 @@ public class BoardMain extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JPanel pnlSearch = new JPanel();
+		pnlSearch = new JPanel();
 		contentPane.add(pnlSearch, BorderLayout.NORTH);
 		pnlSearch.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -106,11 +108,15 @@ public class BoardMain extends JFrame {
 
 		JButton btnHome = new JButton("홈");
 		pnlSearch.add(btnHome);
+		
+		btnChatting = new JButton("채팅");
+
+		pnlSearch.add(btnChatting);
 
 		txtSearch = new JTextField();
 		txtSearch.setPreferredSize(new Dimension(7, 23));
 		pnlSearch.add(txtSearch);
-		txtSearch.setColumns(30);
+		txtSearch.setColumns(28);
 
 		JButton btnSearch = new JButton("검색");
 		pnlSearch.add(btnSearch);
@@ -127,6 +133,13 @@ public class BoardMain extends JFrame {
 				curPage = 1;
 				searchWord = "";
 				showTable(pnlBoard, pnlPaging, searchWord, curPage);
+			}
+		});
+		
+		// 
+		btnChatting.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ChatMain(mBean).setVisible(true);
 			}
 		});
 

@@ -104,6 +104,8 @@ public class Login extends JFrame {
 			
 			if(id.equals(mBean.getId())) {
 				
+				mCRUD.updateLastLoginDt(mBean.getMember_no());
+				
 				JOptionPane.showMessageDialog(null, id + "님 환영합니다.");
 				Login.this.dispose();
 				

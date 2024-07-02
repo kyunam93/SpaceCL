@@ -47,4 +47,14 @@ public class MemberCRUD extends CommonCRUD {
 
 	}// method
 
+	public void updateLastLoginDt(String member_no) {
+
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }// class
