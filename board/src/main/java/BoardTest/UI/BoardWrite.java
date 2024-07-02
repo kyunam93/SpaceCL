@@ -35,7 +35,7 @@ public class BoardWrite extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public BoardWrite(MemberBean mBean) {
+	public BoardWrite(MemberBean mBean, BoardMain main) {
 		System.out.println("\n[CALL] BoardWrite");
 
 		init();
@@ -63,7 +63,7 @@ public class BoardWrite extends JDialog {
 				int cnt = bCRUD.insertBoard(mBean, title, contents);
 				if (cnt > 0) {
 					JOptionPane.showMessageDialog(null, "게시글이 작성되었습니다.");
-					
+					main.showBoard();
 					BoardWrite.this.dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "게시글이 작성이 실패되었습니다.");
@@ -84,7 +84,7 @@ public class BoardWrite extends JDialog {
 	}// constructor
 
 	public void init() {
-		System.out.println("[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
+		System.out.println("\n[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
 
 		setBounds(100, 100, 600, 700);
 		setLocationRelativeTo(contentPanel);

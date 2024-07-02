@@ -14,13 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -66,7 +64,7 @@ public class Login extends JFrame {
 	}// constructor
 
 	public void checkLogin() {
-		System.out.println("[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
+		System.out.println("\n[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
 
 		String id = txtId.getText();
 		String pw = new String(txtPw.getPassword());
@@ -80,6 +78,7 @@ public class Login extends JFrame {
 
 		if (id.equals(mBean.getId())) {
 			JOptionPane.showMessageDialog(null, mBean.getName() + " 님 환영합니다.");
+			
 			new BoardMain(mBean).setVisible(true);
 			Login.this.dispose();
 		} else {
@@ -88,7 +87,7 @@ public class Login extends JFrame {
 	}// method
 
 	public void init() {
-		System.out.println("[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
+		System.out.println("\n[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 200, 150);
