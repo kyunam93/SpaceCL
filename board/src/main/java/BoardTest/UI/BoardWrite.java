@@ -23,6 +23,7 @@ import BoardTest.DB.MemberBean;
 
 public class BoardWrite extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtTitle;
 	private JTextArea txtContents;
@@ -30,42 +31,51 @@ public class BoardWrite extends JDialog {
 	private JButton btnCancel;
 
 	private BoardCRUD bCRUD = new BoardCRUD();
-	
+
 	/**
 	 * Create the dialog.
 	 */
 	public BoardWrite(MemberBean mBean) {
-		System.out.println("[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
+		System.out.println("\n[CALL] BoardWrite");
 
 		init();
-		
+
 		// 작성버튼 기능
 		btnOk.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String title = txtTitle.getText();
 				String contents = txtContents.getText();
-				
-				if(StringUtils.isNullOrEmpty(title)) {
+
+				if (StringUtils.isNullOrEmpty(title)) {
 					JOptionPane.showMessageDialog(null, "제목을 입력해 주세요.");
 					txtTitle.setFocusable(true);
-					
+
 					return;
-				} else if(StringUtils.isNullOrEmpty(contents)) {
+				} else if (StringUtils.isNullOrEmpty(contents)) {
 					JOptionPane.showMessageDialog(null, "내용을 입력해 주세요.");
 					txtContents.setFocusable(true);
-				
+
 					return;
 				} // if ~ else if
-				
-				bCRUD.insertBoard(mBean, title, contents);
+
+				int cnt = bCRUD.insertBoard(mBean, title, contents);
+				if (cnt > 0) {
+					JOptionPane.showMessageDialog(null, "게시글이 작성되었습니다.");
+					
+					BoardWrite.this.dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "게시글이 작성이 실패되었습니다.");
+					
+					return;
+				} // if ~ else
 			}
 		});
-		
+
 		// 취소버튼 기능
 		btnCancel.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BoardWrite.this.dispose();

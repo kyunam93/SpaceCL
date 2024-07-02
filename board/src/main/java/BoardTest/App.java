@@ -1,3 +1,4 @@
+package BoardTest;
 import BoardTest.UI.Login;
 
 public class App {

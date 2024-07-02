@@ -15,26 +15,22 @@ import javax.swing.JTextArea;
 
 public class BoardDetail extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			BoardDetail dialog = new BoardDetail();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.
 	 */
 	public BoardDetail() {
+		System.out.println("\n[CALL] BoardDetail");
+
+		init();
+	}// constructor
+	
+	public void init() {
+		System.out.println("[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
+
 		setBounds(100, 100, 600, 700);
 		setLocationRelativeTo(contentPanel);
 		getContentPane().setLayout(new BorderLayout());
@@ -83,7 +79,6 @@ public class BoardDetail extends JDialog {
 		JButton btnCancel = new JButton("취소");
 		btnCancel.setActionCommand("OK");
 		pnlButton.add(btnCancel);
+	}// method init
 
-	}
-
-}
+}// class

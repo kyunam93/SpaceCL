@@ -12,5 +12,6 @@ public class BoardBean {
 	private String count;
 	private String reg_dt;
 	private String member_no;
+	private String writer;
 	
 }

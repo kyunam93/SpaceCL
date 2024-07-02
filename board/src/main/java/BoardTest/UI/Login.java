@@ -27,6 +27,7 @@ import javax.swing.JPasswordField;
 
 public class Login extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtId;
 	private JPasswordField txtPw;
@@ -38,7 +39,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		System.out.println("[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
+		System.out.println("\n[CALL] Login");
 
 		init();
 
@@ -53,6 +54,7 @@ public class Login extends JFrame {
 			}
 		});
 		
+		// 로그인 버튼
 		btnLogin.addActionListener(new ActionListener() {
 
 			@Override
@@ -90,6 +92,8 @@ public class Login extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 200, 150);
+		setResizable(false);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

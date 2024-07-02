@@ -16,16 +16,21 @@ public class CommonCRUD {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 
-				String url = "jdbc:mysql://localhost:3306/mydb";
+				String url = "jdbc:mysql://localhost:3306/board";
 
 				conn = DriverManager.getConnection(url, user, password);
 
+				if (conn != null) {
+					System.out.println("[성공] 데이터베이스 연결");
+				} else {
+					System.out.println("[실패] 데이터베이스 연결");
+				} // if ~ else
+
 			} catch (Exception e) {
+				System.out.println("[에러] 데이터베이스 연결");
 				e.printStackTrace();
 			} // try ~ catch
 		} // if
-
-		System.out.println("[성공] 데이터베이스 연결");
 
 		return conn;
 	}// method getConnection

@@ -19,7 +19,7 @@ public class MemberCRUD extends CommonCRUD {
 	}// constructor
 
 	public MemberBean checkLogin(String id, String pw) {
-		System.out.println("\n[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
+		System.out.println("[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
 
 		MemberBean mBean = new MemberBean();
 		
@@ -54,7 +54,7 @@ public class MemberCRUD extends CommonCRUD {
 	}// method checkLogin
 
 	public void updateLastLoginDt(MemberBean mBean) {
-		System.out.println("\n[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
+		System.out.println("[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
 
 		int cnt = 0;
 		
