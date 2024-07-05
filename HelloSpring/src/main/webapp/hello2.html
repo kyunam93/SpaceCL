@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<!-- 주석 : 제이쿼리를 온라인상에서 불러와 사용하는 코드 -->
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			$('#btnSend').on('click', function () {
+
+				// name 취득
+				var stuName = $('#stuName').val();
+				console.log(stuName);// 입력한 값 출력
+
+				var data = {
+					"name": "홍길동",
+					"age": 20,
+					"address": {
+						"city": "서울",
+						"street": "가로수길"
+					},
+					"student": true,
+					"languages": [
+						"phython",
+						"java",
+						"c"
+					]
+				};
+
+				 $.ajax({ 
+				 	type:'post',
+				 	url:'/insertStudent',
+				 	data: JSON.stringify(data),
+				 	success: function() {
+				 		alert('성공');
+				 	},
+				 	dataType: 'json',
+				 	contentType: 'application/json'
+				 });
+
+			});//end btnSend
+
+		});// end document
+	</script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<style>
+		h1 {
+			color: blue;
+		}
+
+		h2 {
+			color: red;
+		}
+	</style>
+
+
+</head>
+
+<body>
+	<h1>학생 기록부</h1><br />
+
+	<input type="text" id="stuName" class="form-control" placeholder="이름을 입력하세요">
+	<button type="button" id="btnSend" class="btn btn-success rounded-pill px-3">전송</button>
+	<br />
+
+	이름:<span id="name"></span><br />
+	나이:<span id="age"></span><br />
+	주소:<span id="addr"></span><br />
+	학생여부:<span id="student"></span><br />
+	개발언어:<span id="langs"></span><br />
+</body>
+
+</html>
