@@ -127,6 +127,9 @@ public class BoardMain extends JFrame {
 		});
 	}// consturctor
 
+	/**
+	 * 
+	 */
 	public void searching() {
 		System.out.println("\n[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
 

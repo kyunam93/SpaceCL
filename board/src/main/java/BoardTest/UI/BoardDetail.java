@@ -119,7 +119,7 @@ public class BoardDetail extends JDialog {
 		System.out.println("\n[CALL] " + new Throwable().getStackTrace()[0].getMethodName());
 
 		setBounds(100, 100, 600, 700);
-		setLocationRelativeTo(contentPanel);
+//		setLocationRelativeTo(contentPanel);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
