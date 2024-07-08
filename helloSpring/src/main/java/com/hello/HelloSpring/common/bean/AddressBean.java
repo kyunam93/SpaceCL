@@ -1,4 +1,4 @@
-package com.hello.HelloSpring.bean;
+package com.hello.helloSpring.common.bean;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.hello.HelloSpring.controller;
+package com.hello.helloSpring.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hello.HelloSpring.bean.MemberBean;
+import com.hello.helloSpring.common.bean.MemberTestBean;
 
 @Controller
 public class InputController {
@@ -18,7 +18,7 @@ public class InputController {
 	@RequestMapping(value = "/insertStudent", method = {
 			RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)// 해당 클래스만 json 형태로 받아온다
 	@ResponseBody // json 형태로 반환됨
-	public Map<String, Object> inputStuden(@RequestBody MemberBean bean) {
+	public Map<String, Object> inputStuden(@RequestBody MemberTestBean bean) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		// bean 안에 데이터가 오는지 보자

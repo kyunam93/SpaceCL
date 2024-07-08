@@ -1,11 +1,11 @@
-package com.hello.HelloSpring.bean;
+package com.hello.helloSpring.common.bean;
 
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class MemberBean {
+public class MemberTestBean {
 
 	private String name;
 	private int age;

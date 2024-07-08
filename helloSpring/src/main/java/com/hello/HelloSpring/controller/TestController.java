@@ -1,4 +1,4 @@
-package com.hello.HelloSpring.controller;
+package com.hello.helloSpring.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hello.HelloSpring.bean.AddressBean;
-import com.hello.HelloSpring.bean.MemberBean;
+import com.hello.helloSpring.common.bean.AddressBean;
+import com.hello.helloSpring.common.bean.MemberTestBean;
 
 @Controller
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)// 클래스 전체를 데이터를 json 형태로 받아온다
@@ -26,7 +26,7 @@ public class TestController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		MemberBean mBean = new MemberBean();
+		MemberTestBean mBean = new MemberTestBean();
 
 		if(name != null) {
 			mBean.setName(name);	
