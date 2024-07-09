@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 				, name
 				, email
 				, addr
-				, birthday
+				, birthdate
 				, hp
 			) 
 		values (
@@ -59,11 +59,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 			, #{name}
 			, #{email}
 			, #{addr}
-			, #{birthday}
+			, #{birthdate}
 			, #{hp} 
 		)
 	</insert>
-
 	<!-- 수정 -->	
 	<update id="updateMember" parameterType="com.hello.helloSpring.common.bean.MemberBean">
 		update 
@@ -79,8 +78,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 			<if test="addr != null and addr != ''">
 				, addr = #{addr}
 			</if>
-			<if test="birthday != null and birthday != ''">
-				, birthday = #{birthday}
+			<if test="birthdate != null and birthdate != ''">
+				, birthdate = #{birthdate}
 			</if>
 			<if test="hp != null and hp != ''">
 				, hp = #{hp}
