@@ -93,7 +93,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		delete from 
 			member
 		where
-			id = #{id}
+			member_no = #{memberNo}
 	</delete>
 
 </mapper>

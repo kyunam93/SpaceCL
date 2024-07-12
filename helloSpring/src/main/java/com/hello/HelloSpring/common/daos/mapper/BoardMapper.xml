@@ -5,6 +5,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 
 <mapper namespace="com.hello.helloSpring.common.daos.BoardDao">
 
+	<insert id="insertBoard" parameterType="com.hello.helloSpring.common.bean.BoardBean">
+		insert into board (member_no, title, contents) 
+		values('1', #{title}, #{contents})
+	</insert>
+
 	<!-- 삭제 -->
 	<delete id="deleteBoardFromMemberNo" parameterType="com.hello.helloSpring.common.bean.BoardBean">
 		delete from 
