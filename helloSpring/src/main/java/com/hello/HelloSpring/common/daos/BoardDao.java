@@ -13,6 +13,8 @@ public interface BoardDao {
 	public int deleteBoardFromMemberNo(BoardBean bean);
 
 	public int insertBoard(BoardBean bean);
+	
+	public int selectBoardListCount(BoardBean bean);
 
 	public List<BoardBean> selectBoardList(BoardBean bean);
 

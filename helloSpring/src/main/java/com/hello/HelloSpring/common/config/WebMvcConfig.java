@@ -22,7 +22,9 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		.excludePathPatterns("/getLoginToken")// 해당 경로에 대해 인터셉터 예외 적용
 		.excludePathPatterns("/login/**")
 		.excludePathPatterns("/board/*Form*")
-		.excludePathPatterns("/insertBoard");
+		.excludePathPatterns("/board/boardList.html")
+		.excludePathPatterns("/js/**")
+		;
 		
 	}// method 
 	

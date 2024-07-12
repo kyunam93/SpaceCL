@@ -22,6 +22,10 @@ public class BoardService {
 		return boardDao.insertBoard(bean); 
 	}// method insertBoard
 	
+	public int selectBoardListCount(BoardBean bean) {
+		return boardDao.selectBoardListCount(bean); 
+	}// method insertBoard
+	
 	public List<BoardBean> selectBoardList(BoardBean bean){
 		return boardDao.selectBoardList(bean);
 	}// method selectBoardList

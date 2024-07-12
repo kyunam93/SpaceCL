@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판 리스트</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+<script type="text/javascript" src="../js/cookie.js"></script>
+<script type="text/javascript">
+	function goPage(pageNo) {
+		const urlParams = new URL(location.href).searchParams;
+		const search = urlParams.get('search');
+		var url = "/board/boardList.html?page=" + pageNo;
+		if (search != null) {
+			url += "&search=" + search;
+		}
+
+		location.href = url;
+	};
+	//<body> 태그가 브라우저에서 전체 로딩이 끝나면 호출된다.
+	$(function() {
+
+		const urlParams = new URL(location.href).searchParams;
+		const page = urlParams.get('page') == null ? "1" : urlParams
+				.get('page');
+		const search = urlParams.get('search');
+
+		var url = "/selectBoardList?";
+		if (page != null) {
+			url += "page=" + page;
+		}
+		if (search != null) {
+			url += "&search=" + search;
+		}
+
+		// name이랑 time 포함해서 보내는 형식
+		$
+				.ajax({
+					type : 'GET',
+					url : url,
+					headers : {
+						"Content-Type" : "application/x-www-form-urlencoded; charset=utf-8",
+						"X-HTTP-Method-Override" : "POST",
+						Authorization : getCookie("authToken")
+					},
+					success : function(data) {
+
+						console.log(data);
+
+						if (data.result == "ok") {
+							// for 문 돌면서 테이블에 그리기
+
+							for (var i = 0; i < data.data.length; i++) {
+
+								var iData = data.data[i];
+
+								var add = "<tr>"
+
+								add += "<td>";
+								add += iData.boardNo;
+								add += "</td>";
+
+								add += "<td>";
+								add += iData.title;
+								add += "</td>";
+
+								add += "<td>";
+								add += iData.memberName;
+								add += "</td>";
+
+								add += "<td>";
+								add += iData.count;
+								add += "</td>";
+
+								add += "<td>";
+								add += iData.regDt;
+								add += "</td>";
+
+								add += "</tr>";
+
+								$('#boardTable > tbody').append(add);
+							}// for
+
+							//페이징 테이블에 대한 for문을 돈다.
+							$("#pagingTable").append("<tr>");
+							for (var i = 1; i <= data.totalPage; i++) {
+								add = "<td>";
+								add += "<span style='cursor: pointer;'  onclick='goPage("
+										+ i + ")'>" + i + "</span>";
+								add += "</td>";
+								$("#pagingTable").append(add);
+							}
+							$("#pagingTable").append("</tr>");
+						}
+					}
+				});
+
+	});
+</script>
+</head>
+<body>
+	<h1>게시판 리스트</h1>
+
+	<table border="1" id="boardTable">
+		<thead>
+			<tr>
+				<td>글번호</td>
+				<td>제목</td>
+				<td>글쓴이</td>
+				<td>조회수</td>
+				<td>날짜</td>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+	</table>
+
+	<table border="1" id="pagingTable">
+	</table>
+</body>
+</html>

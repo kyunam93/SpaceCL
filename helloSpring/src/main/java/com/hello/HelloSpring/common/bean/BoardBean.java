@@ -12,5 +12,9 @@ public class BoardBean {
 	private String secretYn;
 	private String memberNo;
 	private String regDt;
+	private String memberName;
+	
+	private int page;
+	private String search;
 
 }

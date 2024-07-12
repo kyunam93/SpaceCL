@@ -2,44 +2,60 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>로그인 화면</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script>
-        function goLogin() {
+<meta charset="UTF-8">
+<title>로그인 화면</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+<script type="text/javascript" src="../js/cookie.js"></script>
 
-            // alert("로그인 버튼 누름");
-            var memId = $("#memId").val();
-            var memPw = $("#memPw").val();
-            // alert("id: " + memId + ", pw: " + memPw);
+<script>
+	function goLogin() {
 
-            var jsonData = {
-                "id": memId,
-                "pw": memPw
-            };
+		// alert("로그인 버튼 누름");
+		var memId = $("#memId").val();
+		var memPw = $("#memPw").val();
+		// alert("id: " + memId + ", pw: " + memPw);
 
-            // name, time 포함해서 보내는 방식
-            $.ajax({
-                type: 'post',
-                url: '/getLoginToken',
-                data: JSON.stringify(jsonData),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    console.log(data);
-                    alert(data.resultMsg);
-                }
-            });
-        }
-    </script>
+		var jsonData = {
+			"id" : memId,
+			"pw" : memPw
+		};
+
+		// name, time 포함해서 보내는 방식
+		$.ajax({
+			type : 'post',
+			url : '/getLoginToken',
+			data : JSON.stringify(jsonData),
+			dataType : 'json',
+			contentType : 'application/json',
+			success : function(data) {
+				console.log(data);
+
+				alert(data.resultMsg);
+
+				if (data.result == 'ok') {
+					// 쿠키에 저장
+					// setCookie 변수이름, 변수값, 기간 1일
+					setCookie("authToken", data.token, 1);
+
+					// 화면 이동
+					location.href = "/board/boardList.html";
+				}// if
+			}
+		});
+	}
+</script>
 </head>
 
 <body>
-    <h1>로그인</h1>
-    ID : <input type="text" id="memId" /> <br />
-    PW : <input type="password" id="memPw" /> <br />
-    <input type="button" value="로그인" onclick="goLogin()" />
+	<h1>로그인</h1>
+	ID :
+	<input type="text" id="memId" />
+	<br /> PW :
+	<input type="password" id="memPw" />
+	<br />
+	<input type="button" value="로그인" onclick="goLogin()" />
 </body>
 
 </html>

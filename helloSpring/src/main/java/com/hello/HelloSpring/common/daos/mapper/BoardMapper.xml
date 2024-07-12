@@ -5,17 +5,58 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 
 <mapper namespace="com.hello.helloSpring.common.daos.BoardDao">
 
-	<insert id="insertBoard" parameterType="com.hello.helloSpring.common.bean.BoardBean">
-		insert into board (member_no, title, contents) 
-		values('1', #{title}, #{contents})
+	<insert id="insertBoard"
+		parameterType="com.hello.helloSpring.common.bean.BoardBean">
+		insert into board
+		(member_no, title, contents)
+		values
+		(#{memberNo}, #{title}, #{contents})
 	</insert>
 
+	<select id="selectBoardList" parameterType="com.hello.helloSpring.common.bean.BoardBean">
+		SELECT
+			board_no AS boardNo
+			, title
+			, contents
+			, count
+			, secret_yn as secretYn
+			, member_no as memberNo
+			, (SELECT name FROM member WHERE member_no = b.member_no) as memberName
+			, reg_dt as regDt
+		FROM
+			board b
+		WHERE
+			1=1
+		<if test="search != null and search !=''">
+			title LIKE CONCAT('%', #{search},'%') OR 
+			contents LIKE CONCAT('%', #{search},'%')	
+		</if>
+		ORDER BY 
+			board_no DESC
+		LIMIT 
+			#{page}, 10
+	</select>
+	
+	<select id="selectBoardListCount" parameterType="com.hello.helloSpring.common.bean.BoardBean">
+		SELECT
+			count(*)
+		FROM
+			board b
+		WHERE
+			1=1
+		<if test="search != null and search !=''">
+			title LIKE CONCAT('%', #{search},'%') OR 
+			contents LIKE CONCAT('%', #{search},'%')	
+		</if>
+ 	</select>
+
 	<!-- 삭제 -->
-	<delete id="deleteBoardFromMemberNo" parameterType="com.hello.helloSpring.common.bean.BoardBean">
-		delete from 
-			board
+	<delete id="deleteBoardFromMemberNo"
+		parameterType="com.hello.helloSpring.common.bean.BoardBean">
+		delete from
+		board
 		where
-			member_no = #{memberNo}
+		member_no = #{memberNo}
 	</delete>
 
 </mapper>

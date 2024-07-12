@@ -6,15 +6,20 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hello.helloSpring.common.Constants;
+import com.hello.helloSpring.common.bean.MemberBean;
 import com.hello.helloSpring.common.utils.JwtTokenHelper;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class TokenCheckInterceptor implements HandlerInterceptor {
 
+	/**
+	 *
+	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -44,6 +49,15 @@ public class TokenCheckInterceptor implements HandlerInterceptor {
 				result = Constants.RESULT_VAL_OK;
 				resultMsg = "회원정보 Token 검증에 성공하였습니다.";
 
+				// 위의 토큰 정보를 세션 객체에 담아서 컨트롤러에 전달
+				// 컨트롤러에서 사용
+				HttpSession session = request.getSession();
+				MemberBean mBean = new MemberBean();
+				mBean.setId(id);
+				mBean.setMemberNo(issuer);
+				mBean.setHp(subject);
+				session.setAttribute(Constants.KEY_SESSION_MEMBER_BEAN, mBean);
+				
 				return true;// 인터셉터 영역을 통과
 			} catch (ExpiredJwtException expExcepton) {
 				expExcepton.printStackTrace();
@@ -86,6 +100,9 @@ public class TokenCheckInterceptor implements HandlerInterceptor {
 			ModelAndView modelAndView) throws Exception {
 		// 요청이 처리된 후에 실행할 코드
 		System.out.println("TokenIntercepter postHandle() <==");
+		
+		// 세션 초기화
+		request.getSession().setAttribute(Constants.KEY_SESSION_MEMBER_BEAN, null);
 	}// method postHandle
 
 }// class
